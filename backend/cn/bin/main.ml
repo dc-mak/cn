@@ -576,7 +576,7 @@ let run_seq_tests
             print_endline
               ("Created directory \"" ^ output_dir ^ "\" with full permissions."));
           let _, sigma = ail_prog in
-          Fulminate.Cn_internal_to_ail.augment_record_map (BaseTypes.Record []);
+          Fulminate.Cn_to_ail.augment_record_map (BaseTypes.Record []);
           Fulminate.Executable_spec.main
             ~without_ownership_checking
             ~without_loop_invariants:true
@@ -722,7 +722,7 @@ let run_tests
         print_endline ("Created directory \"" ^ output_dir ^ "\" with full permissions."));
       Cerb_colour.without_colour
         (fun () ->
-          Fulminate.Cn_internal_to_ail.augment_record_map (BaseTypes.Record []);
+          Fulminate.Cn_to_ail.augment_record_map (BaseTypes.Record []);
           (try
              Fulminate.Executable_spec.main
                ~without_ownership_checking
