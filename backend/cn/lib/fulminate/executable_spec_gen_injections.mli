@@ -83,8 +83,6 @@ val generate_struct_injs
   :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
   (Cerb_location.t * string list) list
 
-val bt_is_record_or_tuple : 'a BT.t_gen -> bool
-
 val fns_and_preds_with_record_rt
   :  ('a * Definition.Function.t) list * ('b * Definition.Predicate.t) list ->
   'a list * 'b list
@@ -92,20 +90,16 @@ val fns_and_preds_with_record_rt
 val generate_c_functions_internal
   :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
   (Sym.t * Definition.Function.t) list ->
-  string * string * (Cerb_location.t * string list) list * (string * string)
+  string * string * (Cerb_location.t * string list) list
 
 val remove_duplicates : ('a -> 'a -> bool) -> 'a list -> 'a list
 
 val generate_c_predicates_internal
   :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
   (Sym.t * Definition.Predicate.t) list ->
-  string * (Cerb_location.t * string list) list * (string * string)
+  string * (Cerb_location.t * string list) list
 
-val generate_ownership_functions
-  :  bool ->
-  Cn_to_ail.C.ctype list ref ->
-  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
-  string * string
+val generate_ownership_functions : bool -> Cn_to_ail.C.ctype list ref -> string * string
 
 val generate_conversion_and_equality_functions
   :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
