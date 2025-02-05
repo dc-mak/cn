@@ -42,6 +42,13 @@ val empty_ail_stmt : CF.GenTypes.genTypeCategory A.statement_
 
 val is_empty_ail_stmt : 'a A.statement_ -> bool
 
+val generate_sym_with_suffix
+  :  ?suffix:string ->
+  ?uppercase:bool ->
+  ?lowercase:bool ->
+  C.union_tag ->
+  C.union_tag
+
 val list_split_three : ('a * 'b * 'c) list -> 'a list * 'b list * 'c list
 
 type cn_dependencies = A.ail_identifier list
@@ -77,3 +84,7 @@ val find_ctype_from_bindings : (Sym.t * ('a * 'b * 'c * 'd)) list -> Sym.t -> 'd
 val create_decl_object : Cerb_frontend.Ctype.ctype -> A.declaration
 
 val create_declaration : 'a -> 'b -> 'a * (Cerb_location.t * CF.Annot.attributes * 'b)
+
+val get_start_loc : ?offset:int -> Cerb_location.t -> Cerb_location.t
+
+val get_end_loc : ?offset:int -> Cerb_location.t -> Cerb_location.t

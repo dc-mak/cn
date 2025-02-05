@@ -486,7 +486,7 @@ let generate_executable_specs
     ~magic_comment_char_dollar (* Callbacks *)
     ~save_cpp:save
     ~handle_error:(handle_type_error ~json ?output_dir ~serialize_json:json_trace)
-    ~f:(fun ~cabs_tunit:_ ~prog5 ~ail_prog ~statement_locs ~paused:_ ->
+    ~f:(fun ~cabs_tunit:_ ~prog5 ~ail_prog ~statement_locs:_ ~paused:_ ->
       Cerb_colour.without_colour
         (fun () ->
           (try
@@ -502,7 +502,6 @@ let generate_executable_specs
                output_decorated
                output_decorated_dir
                prog5
-               statement_locs
            with
            | e -> handle_error_with_user_guidance ~label:"CN-Exec" e);
           Or_TypeError.return ())
@@ -557,7 +556,7 @@ let run_seq_tests
     ~magic_comment_char_dollar (* Callbacks *)
     ~save_cpp:None (* XXX *)
     ~handle_error
-    ~f:(fun ~cabs_tunit ~prog5 ~ail_prog ~statement_locs ~paused:_ ->
+    ~f:(fun ~cabs_tunit ~prog5 ~ail_prog ~statement_locs:_ ~paused:_ ->
       Cerb_colour.without_colour
         (fun () ->
           let _, sigma = ail_prog in
@@ -589,8 +588,7 @@ let run_seq_tests
             ail_prog
             None
             (Some output_dir)
-            prog5
-            statement_locs;
+            prog5;
           let config : TestGeneration.seq_config =
             { with_static_hack;
               num_samples;
@@ -679,7 +677,7 @@ let run_tests
     ~magic_comment_char_dollar (* Callbacks *)
     ~save_cpp:None (* XXX *)
     ~handle_error
-    ~f:(fun ~cabs_tunit ~prog5 ~ail_prog ~statement_locs ~paused:_ ->
+    ~f:(fun ~cabs_tunit ~prog5 ~ail_prog ~statement_locs:_ ~paused:_ ->
       let config : TestGeneration.config =
         { num_samples;
           max_backtracks;
@@ -737,7 +735,6 @@ let run_tests
                None
                (Some output_dir)
                prog5
-               statement_locs
            with
            | e -> handle_error_with_user_guidance ~label:"CN-Exec" e);
           (try

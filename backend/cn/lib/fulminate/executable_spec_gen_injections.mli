@@ -24,18 +24,6 @@ val extract_global_variables
   :  ('a * 'b Mucore.globs) list ->
   ('a * Cn_to_ail.C.ctype) list
 
-val generate_c_pres_and_posts_internal
-  :  bool ->
-  Executable_spec_extract.instrumentation ->
-  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
-  unit Mucore.file ->
-  (Sym.t * (string list * string list)) list
-  * (Cerb_location.t * string list) list
-  * (Cerb_location.t
-    * Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.expression option
-    * string list)
-      list
-
 val generate_c_assume_pres_internal
   :  Executable_spec_extract.instrumentation list ->
   Cerb_frontend.GenTypes.genTypeCategory A.sigma ->
@@ -44,10 +32,11 @@ val generate_c_assume_pres_internal
   * Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma_function_definition)
     list
 
-val generate_c_specs_internal
+val generate_c_specs
   :  bool ->
+  bool ->
+  bool ->
   Executable_spec_extract.instrumentation list ->
-  Cerb_location.t CStatements.LocMap.t ->
   Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
   unit Mucore.file ->
   executable_spec

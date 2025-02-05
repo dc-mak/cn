@@ -135,7 +135,7 @@ let gen_arg (ctx : (Sym.t * C.ctype) list) ((name, ty) : Sym.t * C.ctype) : Pp.d
 
 
 let stmt_to_doc (stmt : CF.GenTypes.genTypeCategory A.statement_) : Pp.document =
-  CF.Pp_ail.pp_statement ~executable_spec:true ~bs:[] (Utils.mk_stmt stmt)
+  CF.Pp_ail.pp_statement ~bs:[] (Utils.mk_stmt stmt)
 
 
 let create_test_file
@@ -204,7 +204,9 @@ let rec gen_sequence
   let open Pp in
   match fuel with
   | 0 ->
-    let unmap_stmts = List.map Fulminate.Ownership_exec.generate_c_local_ownership_exit ctx in
+    let unmap_stmts =
+      List.map Fulminate.Ownership_exec.generate_c_local_ownership_exit ctx
+    in
     let unmap_str = hardline ^^ separate_map hardline stmt_to_doc unmap_stmts in
     Right (seq_so_far ^^ unmap_str ^^ hardline ^^ string "return 0;", stats)
   | n ->
@@ -252,7 +254,8 @@ let rec gen_sequence
             | Some name ->
               stmt_to_doc
                 (A.AilSexpr
-                   (Fulminate.Ownership_exec.generate_c_local_ownership_entry_fcall (name, ret_ty)))
+                   (Fulminate.Ownership_exec.generate_c_local_ownership_entry_fcall
+                      (name, ret_ty)))
               ^^ hardline
           in
           let _ =
@@ -443,7 +446,6 @@ let generate
   save ~perm:0o777 output_dir "run_tests.sh" script_doc;
   let fun_to_decl (inst : Fulminate.Executable_spec_extract.instrumentation) =
     CF.Pp_ail.pp_function_prototype
-      ~executable_spec:true
       inst.fn
       (let _, _, decl = List.assoc Sym.equal inst.fn sigma.declarations in
        decl)

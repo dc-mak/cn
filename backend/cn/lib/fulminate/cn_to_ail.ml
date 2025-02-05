@@ -2858,9 +2858,7 @@ let rec cn_to_ail_lat ?(is_toplevel = true) dts pred_sym_opt globals preds = fun
   | LAT.Resource ((name, (ret, _bt)), (loc, _str_opt), lat) ->
     let upd_s = generate_error_msg_info_update_stats ~cn_source_loc_opt:(Some loc) () in
     let pop_s = generate_cn_pop_msg_info in
-    let b1, s1 =
-      cn_to_ail_resource ~is_toplevel name dts globals preds OE.Pre loc ret
-    in
+    let b1, s1 = cn_to_ail_resource ~is_toplevel name dts globals preds OE.Pre loc ret in
     let b2, s2 = cn_to_ail_lat ~is_toplevel dts pred_sym_opt globals preds lat in
     (b1 @ b2, upd_s @ s1 @ pop_s @ s2)
   | LAT.Constraint (lc, (loc, _str_opt), lat) ->
@@ -3097,9 +3095,7 @@ let rec cn_to_ail_lat_internal_loop ?(is_toplevel = true) dts globals preds = fu
   | LAT.Resource ((name, (ret, _bt)), (loc, _str_opt), lat) ->
     let upd_s = generate_error_msg_info_update_stats ~cn_source_loc_opt:(Some loc) () in
     let pop_s = generate_cn_pop_msg_info in
-    let b1, s1 =
-      cn_to_ail_resource ~is_toplevel name dts globals preds OE.Loop loc ret
-    in
+    let b1, s1 = cn_to_ail_resource ~is_toplevel name dts globals preds OE.Loop loc ret in
     let b2, s2 = cn_to_ail_lat_internal_loop ~is_toplevel dts globals preds lat in
     (b1 @ b2, upd_s @ s1 @ pop_s @ s2)
   | LAT.Constraint (lc, (loc, _str_opt), lat) ->

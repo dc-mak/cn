@@ -23,10 +23,7 @@ let name_of_bt (bt : BT.t) : string =
   let ct' =
     match bt_to_ctype bt with Ctype (_, Pointer (_, ct')) -> ct' | _ -> failwith __LOC__
   in
-  let default =
-    CF.Pp_utils.to_plain_string
-      (CF.Pp_ail.pp_ctype ~executable_spec:true C.no_qualifiers ct')
-  in
+  let default = CF.Pp_utils.to_plain_string (CF.Pp_ail.pp_ctype C.no_qualifiers ct') in
   Utils.get_typedef_string ct |> Option.value ~default
 
 
@@ -419,7 +416,11 @@ let compile_it
   (prog5 : unit Mucore.file)
   (it : IT.t)
   =
-  CtA.cn_to_ail_expr_toplevel sigma.cn_datatypes (extract_global_variables prog5.globs) None it
+  CtA.cn_to_ail_expr_toplevel
+    sigma.cn_datatypes
+    (extract_global_variables prog5.globs)
+    None
+    it
 
 
 let owned_sct_call
@@ -807,11 +808,12 @@ let synthesize
       insts
       |> List.filter (fun (inst : Fulminate.Executable_spec_extract.instrumentation) ->
         Option.is_some inst.internal)
-      |> List.filter_map (fun (inst : Fulminate.Executable_spec_extract.instrumentation) ->
-        match List.assoc Sym.equal inst.fn sigma.declarations with
-        | _, _, Decl_function (_, _, cts, _, _, _) ->
-          Some (List.map (fun (_, ct, _) -> ct) cts)
-        | _ -> None)
+      |> List.filter_map
+           (fun (inst : Fulminate.Executable_spec_extract.instrumentation) ->
+              match List.assoc Sym.equal inst.fn sigma.declarations with
+              | _, _, Decl_function (_, _, cts, _, _, _) ->
+                Some (List.map (fun (_, ct, _) -> ct) cts)
+              | _ -> None)
       |> List.flatten
     in
     let types_of_interest =
