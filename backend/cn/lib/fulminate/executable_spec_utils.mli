@@ -88,3 +88,5 @@ val create_declaration : 'a -> 'b -> 'a * (Cerb_location.t * CF.Annot.attributes
 val get_start_loc : ?offset:int -> Cerb_location.t -> Cerb_location.t
 
 val get_end_loc : ?offset:int -> Cerb_location.t -> Cerb_location.t
+
+val concat_map_newline : Pp.document list -> Pp.document

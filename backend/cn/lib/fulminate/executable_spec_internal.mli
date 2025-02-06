@@ -1,4 +1,3 @@
-module CF = Cerb_frontend
 module CB = Cerb_backend
 module BT = BaseTypes
 module A = Cn_to_ail.A
@@ -11,7 +10,9 @@ type executable_spec =
   { pre_post : (A.ail_identifier * (string list * string list)) list;
     in_stmt : (Cerb_location.t * string list) list;
     returns :
-      (Cerb_location.t * CF.GenTypes.genTypeCategory A.expression option * string list)
+      (Cerb_location.t
+      * Cerb_frontend.GenTypes.genTypeCategory A.expression option
+      * string list)
         list
   }
 
@@ -41,8 +42,6 @@ val generate_c_specs
   unit Mucore.file ->
   executable_spec
 
-val concat_map_newline : PPrint.document list -> PPrint.document
-
 val generate_doc_from_ail_struct
   :  Sym.t
      * (Cerb_location.t * Cerb_frontend.Annot.attributes * Cn_to_ail.C.tag_definition) ->
@@ -69,35 +68,27 @@ val generate_str_from_ail_structs
 
 val generate_c_datatypes
   :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
-  (Cerb_location.t * string) list * string * string list
+  (Cerb_location.t * string) list
 
 val generate_c_struct_strs
   :  (A.ail_identifier
-     * (Cerb_location.t * CF.Annot.attributes * Cn_to_ail.C.tag_definition))
+     * (Cerb_location.t * Cerb_frontend.Annot.attributes * Cn_to_ail.C.tag_definition))
        list ->
   string
 
 val generate_cn_versions_of_structs : Cn_to_ail.A.sigma_tag_definition list -> string
 
-val generate_struct_injs
-  :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
-  (Cerb_location.t * string list) list
-
-val fns_and_preds_with_record_rt
-  :  ('a * Definition.Function.t) list * ('b * Definition.Predicate.t) list ->
-  'a list * 'b list
-
-val generate_c_functions_internal
-  :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
-  (Sym.t * Definition.Function.t) list ->
-  string * string * (Cerb_location.t * string list) list
+val generate_c_functions
+  :  Cerb_frontend.GenTypes.genTypeCategory A.sigma ->
+  (A.ail_identifier * Definition.Function.t) list ->
+  string * string * Cerb_location.t list
 
 val remove_duplicates : ('a -> 'a -> bool) -> 'a list -> 'a list
 
-val generate_c_predicates_internal
+val generate_c_predicates
   :  Cerb_frontend.GenTypes.genTypeCategory Cn_to_ail.A.sigma ->
-  (Sym.t * Definition.Predicate.t) list ->
-  string * (Cerb_location.t * string list) list
+  (A.ail_identifier * Definition.Predicate.t) list ->
+  string * string * Cerb_location.t list
 
 val generate_ownership_functions : bool -> Cn_to_ail.C.ctype list ref -> string * string
 
