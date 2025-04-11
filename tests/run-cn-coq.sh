@@ -65,11 +65,11 @@ DIRNAME=$(dirname "$0")
 
 # If single file specified, use that, otherwise find all .c files
 if [ -n "${SINGLE_FILE}" ]; then
-    if [ ! -f "${DIRNAME}/cn/${SINGLE_FILE}" ]; then
-        echo "Error: Test file ${DIRNAME}/cn/${SINGLE_FILE} not found"
+    if [ ! -f "${SINGLE_FILE}" ]; then
+        echo "Error: Test file ${SINGLE_FILE} not found"
         exit 1
     fi
-    SUCC="${DIRNAME}/cn/${SINGLE_FILE}"
+    SUCC="${SINGLE_FILE}"
 else
     SUCC=$(find "${DIRNAME}"/cn -name '*.c' | grep -v '\.error\.c')
 fi
