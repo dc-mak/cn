@@ -39,86 +39,86 @@ type ail_executable_spec =
         list
   }
 
-val generate_get_or_put_ownership_function
+val get_or_put_ownership_function
   :  without_ownership_checking:bool ->
   Ctype.ctype ->
   AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition
 
-val generate_assume_ownership_function
+val assume_ownership_function
   :  without_ownership_checking:bool ->
   Ctype.ctype ->
   AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition
 
-val generate_datatype_equality_function
+val datatype_equality_function
   :  AilSyntax.sigma_cn_datatype ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_datatype_map_get
+val datatype_map_get
   :  Cerb_frontend.Symbol.sym Cerb_frontend.Cn.cn_datatype ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_datatype_default_function
+val datatype_default_function
   :  Cerb_frontend.Symbol.sym Cerb_frontend.Cn.cn_datatype ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_struct_conversion_to_function
+val struct_conversion_to_function
   :  AilSyntax.sigma_tag_definition ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_struct_conversion_from_function
+val struct_conversion_from_function
   :  AilSyntax.sigma_tag_definition ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_struct_equality_function
+val struct_equality_function
   :  ?is_record:bool ->
   AilSyntax.sigma_tag_definition ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_struct_map_get
+val struct_map_get
   :  AilSyntax.sigma_tag_definition ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_struct_default_function
+val struct_default_function
   :  ?is_record:bool ->
   AilSyntax.sigma_tag_definition ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_record_tag : Sym.t -> BaseTypes.t -> Sym.t option
+val record_tag : Sym.t -> BaseTypes.t -> Sym.t option
 
-val generate_record_opt : Sym.t -> BaseTypes.t -> AilSyntax.sigma_tag_definition option
+val record_opt : Sym.t -> BaseTypes.t -> AilSyntax.sigma_tag_definition option
 
-val generate_record_equality_function
+val record_equality_function
   :  Sym.t * BaseTypes.member_types ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_record_default_function
+val record_default_function
   :  'a ->
   Sym.t * BaseTypes.member_types ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val generate_record_map_get
+val record_map_get
   :  Sym.t * 'a ->
   (AilSyntax.sigma_declaration
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)

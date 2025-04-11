@@ -22,7 +22,7 @@ val rm_expr : 'a A.expression -> 'a A.expression_
 
 val empty_ail_expr : 'a A.expression_
 
-val generate_sym_with_suffix
+val sym_with_suffix
   :  ?suffix:string ->
   ?uppercase:bool ->
   ?lowercase:bool ->

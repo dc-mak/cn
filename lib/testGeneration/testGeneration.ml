@@ -38,8 +38,7 @@ let compile_assumes
   let declarations, function_definitions =
     List.split
       (List.map
-         (fun ctype ->
-            CtA.generate_assume_ownership_function ~without_ownership_checking ctype)
+         (fun ctype -> CtA.assume_ownership_function ~without_ownership_checking ctype)
          (let module CtypeSet =
             Set.Make (struct
               type t = C.ctype

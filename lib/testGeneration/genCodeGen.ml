@@ -546,7 +546,7 @@ let compile (sigma : CF.GenTypes.genTypeCategory A.sigma) (ctx : GR.context) : P
         BT.Record
           (List.map (fun (x, bt) -> (Id.make loc (Sym.pp_string x), bt)) def.oargs)
       in
-      let new_tag = Option.get (CtA.generate_record_tag name bt) in
+      let new_tag = Option.get (CtA.record_tag name bt) in
       let typedef_doc tag =
         let open Pp in
         string "typedef struct" ^^^ Sym.pp tag ^^^ Sym.pp new_tag ^^ semi
@@ -554,7 +554,7 @@ let compile (sigma : CF.GenTypes.genTypeCategory A.sigma) (ctx : GR.context) : P
       match CtA.lookup_records_map_opt bt with
       | None ->
         CtA.augment_record_map ~cn_sym:name bt;
-        (typedef_doc new_tag, Some (CtA.generate_record_opt name bt |> Option.get))
+        (typedef_doc new_tag, Some (CtA.record_opt name bt |> Option.get))
       | Some existing_sym -> (typedef_doc existing_sym, None))
     |> List.split
   in

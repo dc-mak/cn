@@ -188,16 +188,14 @@ let generate_c_record_funs (sigm : CF.GenTypes.genTypeCategory CF.AilSyntax.sigm
   let cn_record_info = Cn_to_ail.get_records () in
   let cn_record_info = List.map (fun (ms, sym) -> (sym, ms)) cn_record_info in
   let record_equality_functions =
-    List.concat (List.map Cn_to_ail.generate_record_equality_function cn_record_info)
+    List.concat (List.map Cn_to_ail.record_equality_function cn_record_info)
   in
   let record_default_functions =
     List.concat
-      (List.map
-         (Cn_to_ail.generate_record_default_function sigm.cn_datatypes)
-         cn_record_info)
+      (List.map (Cn_to_ail.record_default_function sigm.cn_datatypes) cn_record_info)
   in
   let record_map_get_functions =
-    List.concat (List.map Cn_to_ail.generate_record_map_get cn_record_info)
+    List.concat (List.map Cn_to_ail.record_map_get cn_record_info)
   in
   let eq_decls, eq_defs = List.split record_equality_functions in
   let default_decls, default_defs = List.split record_default_functions in

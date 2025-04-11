@@ -68,7 +68,7 @@ let[@warning "-32" (* unused-value-declaration *)] is_empty_ail_stmt = function
   | _ -> false
 
 
-let generate_sym_with_suffix
+let sym_with_suffix
       ?(suffix = "_tag")
       ?(uppercase = false)
       ?(lowercase = false)

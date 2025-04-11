@@ -370,9 +370,7 @@ let generate_ownership_functions without_ownership_checking ownership_ctypes =
   let ail_funs =
     List.map
       (fun ctype ->
-         Cn_to_ail.generate_get_or_put_ownership_function
-           ~without_ownership_checking
-           ctype)
+         Cn_to_ail.get_or_put_ownership_function ~without_ownership_checking ctype)
       ctypes
   in
   let defs_doc, decls_doc = generate_fun_def_and_decl_docs ail_funs in
@@ -384,26 +382,22 @@ let generate_conversion_and_equality_functions
       (sigm : CF.GenTypes.genTypeCategory CF.AilSyntax.sigma)
   =
   let struct_conversion_funs =
-    List.map Cn_to_ail.generate_struct_conversion_to_function sigm.tag_definitions
-    @ List.map Cn_to_ail.generate_struct_conversion_from_function sigm.tag_definitions
+    List.map Cn_to_ail.struct_conversion_to_function sigm.tag_definitions
+    @ List.map Cn_to_ail.struct_conversion_from_function sigm.tag_definitions
   in
   let struct_equality_funs =
-    List.map Cn_to_ail.generate_struct_equality_function sigm.tag_definitions
+    List.map Cn_to_ail.struct_equality_function sigm.tag_definitions
   in
   let datatype_equality_funs =
-    List.map Cn_to_ail.generate_datatype_equality_function sigm.cn_datatypes
+    List.map Cn_to_ail.datatype_equality_function sigm.cn_datatypes
   in
-  let struct_map_get_funs =
-    List.map Cn_to_ail.generate_struct_map_get sigm.tag_definitions
-  in
+  let struct_map_get_funs = List.map Cn_to_ail.struct_map_get sigm.tag_definitions in
   let struct_default_funs =
-    List.map Cn_to_ail.generate_struct_default_function sigm.tag_definitions
+    List.map Cn_to_ail.struct_default_function sigm.tag_definitions
   in
-  let datatype_map_get_funs =
-    List.map Cn_to_ail.generate_datatype_map_get sigm.cn_datatypes
-  in
+  let datatype_map_get_funs = List.map Cn_to_ail.datatype_map_get sigm.cn_datatypes in
   let datatype_default_funs =
-    List.map Cn_to_ail.generate_datatype_default_function sigm.cn_datatypes
+    List.map Cn_to_ail.datatype_default_function sigm.cn_datatypes
   in
   let ail_funs =
     List.fold_left
