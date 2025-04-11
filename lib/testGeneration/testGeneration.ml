@@ -48,7 +48,7 @@ let compile_assumes
             end)
           in
          !CtA.ownership_ctypes |> CtypeSet.of_list |> CtypeSet.to_seq |> List.of_seq)
-       @ CtA.cn_to_ail_assume_predicates
+       @ CtA.assume_predicates
            prog5.resource_predicates
            sigma.cn_datatypes
            []

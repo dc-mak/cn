@@ -180,14 +180,12 @@ let populate_record_map
 
 
 let generate_all_record_strs () =
-  let ail_records =
-    Cn_to_ail.cn_to_ail_records (Cn_to_ail.RecordMap.bindings !Cn_to_ail.records)
-  in
+  let ail_records = Cn_to_ail.records (Cn_to_ail.get_records ()) in
   Internal.generate_c_records ail_records
 
 
 let generate_c_record_funs (sigm : CF.GenTypes.genTypeCategory CF.AilSyntax.sigma) =
-  let cn_record_info = Cn_to_ail.RecordMap.bindings !Cn_to_ail.records in
+  let cn_record_info = Cn_to_ail.get_records () in
   let cn_record_info = List.map (fun (ms, sym) -> (sym, ms)) cn_record_info in
   let record_equality_functions =
     List.concat (List.map Cn_to_ail.generate_record_equality_function cn_record_info)

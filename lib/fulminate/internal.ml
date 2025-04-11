@@ -68,7 +68,7 @@ let generate_c_specs_internal
   in
   let globals = extract_global_variables prog5.globs in
   let ail_executable_spec =
-    Cn_to_ail.cn_to_ail_pre_post
+    Cn_to_ail.pre_post
       ~without_ownership_checking
       ~with_loop_leak_checks
       dts
@@ -202,7 +202,7 @@ let generate_c_assume_pres_internal
       | _ -> failwith ("unreachable @ " ^ __LOC__)
     in
     let globals = extract_global_variables prog5.globs in
-    Cn_to_ail.cn_to_ail_assume_pre
+    Cn_to_ail.assume_pre
       dts
       inst.fn
       args
@@ -274,8 +274,8 @@ let generate_c_datatypes (sigm : CF.GenTypes.genTypeCategory CF.AilSyntax.sigma)
     match sigm.cn_datatypes with
     | [] -> []
     | d :: ds ->
-      let ail_dt1 = Cn_to_ail.cn_to_ail_datatype ~first:true d in
-      let ail_dts = List.map Cn_to_ail.cn_to_ail_datatype ds in
+      let ail_dt1 = Cn_to_ail.datatype ~first:true d in
+      let ail_dts = List.map Cn_to_ail.datatype ds in
       ail_dt1 :: ail_dts
   in
   let locs_and_struct_strs =
@@ -295,7 +295,7 @@ let generate_c_struct_strs c_structs =
 
 
 let generate_cn_versions_of_structs c_structs =
-  let ail_structs = List.concat (List.map Cn_to_ail.cn_to_ail_struct c_structs) in
+  let ail_structs = List.concat (List.map Cn_to_ail.struct_ c_structs) in
   "\n/* CN VERSIONS OF C STRUCTS */\n\n" ^ generate_str_from_ail_structs ail_structs
 
 
@@ -321,7 +321,7 @@ let generate_c_functions
   =
   let ail_funs_and_records =
     List.map
-      (fun cn_f -> Cn_to_ail.cn_to_ail_function cn_f sigm.cn_datatypes sigm.cn_functions)
+      (fun cn_f -> Cn_to_ail.function_ cn_f sigm.cn_datatypes sigm.cn_functions)
       logical_predicates
   in
   let ail_funs, _ = List.split ail_funs_and_records in
@@ -347,11 +347,7 @@ let generate_c_predicates
       (resource_predicates : (Sym.t * Definition.Predicate.t) list)
   =
   let ail_funs, _ =
-    Cn_to_ail.cn_to_ail_predicates
-      resource_predicates
-      sigm.cn_datatypes
-      []
-      sigm.cn_predicates
+    Cn_to_ail.predicates resource_predicates sigm.cn_datatypes [] sigm.cn_predicates
   in
   let locs_and_decls, defs = List.split ail_funs in
   let locs, decls = List.split locs_and_decls in

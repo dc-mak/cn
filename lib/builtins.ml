@@ -116,7 +116,7 @@ let is_null_def : builtin_fn_def =
     (IT.eq__ (IT.sym_ (sym, bt, loc)) (IT.null_ loc)) loc)
 
 
-(* Cannot translate this to a logical function until the TODO in `cn_to_ail_expr_aux_internal` in `cn_internal_to_ail.ml` is resolved*)
+(* Cannot translate this to a logical function until the TODO in [Fulminate.Cn_to_ail.expr_aux_internal] is resolved*)
 let has_alloc_id_def =
   ( "has_alloc_id",
     Sym.fresh "has_alloc_id",

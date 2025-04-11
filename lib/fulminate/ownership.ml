@@ -85,7 +85,7 @@ let generate_c_local_ownership_entry_fcall (local_sym, local_ctype) =
 
 
 let generate_c_local_cn_addr_var sym =
-  (* Hardcoding parts of cn_to_ail_base_type to prevent circular dependency between
+  (* Hardcoding parts of base_type to prevent circular dependency between
      this module and Cn_internal_to_ail, which includes Ownership already. *)
   let cn_addr_sym = generate_sym_with_suffix ~suffix:"_addr_cn" sym in
   let annots = [ CF.Annot.Atypedef (Sym.fresh "cn_pointer") ] in

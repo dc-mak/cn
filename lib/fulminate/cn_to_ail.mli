@@ -2,15 +2,7 @@ open Cerb_frontend
 
 val ownership_ctypes : Ctype.ctype list ref
 
-module MembersKey : sig
-  type t = (Id.t * BaseTypes.t) list
-
-  val compare : t -> t -> int
-end
-
-module RecordMap : module type of Map.Make (MembersKey)
-
-val records : Sym.t RecordMap.t ref
+val get_records : unit -> ((Id.t * BaseTypes.t) list * Sym.t) list
 
 val augment_record_map : ?cn_sym:Sym.t -> BaseTypes.t -> unit
 
@@ -132,7 +124,7 @@ val generate_record_map_get
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val cn_to_ail_expr_toplevel
+val expr_toplevel
   :  AilSyntax.sigma_cn_datatype list ->
   (Ctype.union_tag * Ctype.ctype) list ->
   Sym.t option ->
@@ -141,7 +133,7 @@ val cn_to_ail_expr_toplevel
   * GenTypes.genTypeCategory AilSyntax.statement_ list
   * GenTypes.genTypeCategory AilSyntax.expression
 
-val cn_to_ail_logical_constraint
+val logical_constraint
   :  AilSyntax.sigma_cn_datatype list ->
   (Ctype.union_tag * Ctype.ctype) list ->
   LogicalConstraints.t ->
@@ -149,20 +141,18 @@ val cn_to_ail_logical_constraint
   * GenTypes.genTypeCategory AilSyntax.statement_ list
   * GenTypes.genTypeCategory AilSyntax.expression
 
-val cn_to_ail_struct
-  :  AilSyntax.sigma_tag_definition ->
-  AilSyntax.sigma_tag_definition list
+val struct_ : AilSyntax.sigma_tag_definition -> AilSyntax.sigma_tag_definition list
 
-val cn_to_ail_datatype
+val datatype
   :  ?first:bool ->
   AilSyntax.sigma_cn_datatype ->
   Locations.t * AilSyntax.sigma_tag_definition list
 
-val cn_to_ail_records
-  :  (MembersKey.t * AilSyntax.ail_identifier) list ->
+val records
+  :  ((Id.t * BaseTypes.t) list * AilSyntax.ail_identifier) list ->
   AilSyntax.sigma_tag_definition list
 
-val cn_to_ail_function
+val function_
   :  Sym.t * Definition.Function.t ->
   AilSyntax.sigma_cn_datatype list ->
   AilSyntax.sigma_cn_function list ->
@@ -170,7 +160,7 @@ val cn_to_ail_function
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition option)
   * AilSyntax.sigma_tag_definition option
 
-val cn_to_ail_predicates
+val predicates
   :  (Sym.t * Definition.Predicate.t) list ->
   AilSyntax.sigma_cn_datatype list ->
   (Sym.t * Ctype.ctype) list ->
@@ -180,7 +170,7 @@ val cn_to_ail_predicates
     list
   * AilSyntax.sigma_tag_definition option list
 
-val cn_to_ail_pre_post
+val pre_post
   :  without_ownership_checking:bool ->
   with_loop_leak_checks:bool ->
   AilSyntax.sigma_cn_datatype list ->
@@ -190,7 +180,7 @@ val cn_to_ail_pre_post
   Extract.fn_args_and_body option ->
   ail_executable_spec
 
-val cn_to_ail_assume_predicates
+val assume_predicates
   :  (Sym.t * Definition.Predicate.t) list ->
   AilSyntax.sigma_cn_datatype list ->
   (Sym.t * Ctype.ctype) list ->
@@ -199,7 +189,7 @@ val cn_to_ail_assume_predicates
   * GenTypes.genTypeCategory AilSyntax.sigma_function_definition)
     list
 
-val cn_to_ail_assume_pre
+val assume_pre
   :  AilSyntax.sigma_cn_datatype list ->
   Ctype.union_tag ->
   (Ctype.union_tag * (BaseTypes.t * Ctype.ctype)) list ->

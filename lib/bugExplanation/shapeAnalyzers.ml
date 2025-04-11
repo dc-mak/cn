@@ -114,11 +114,7 @@ let compile_it
       (prog5 : unit Mucore.file)
       (it : IT.t)
   =
-  CtA.cn_to_ail_expr_toplevel
-    sigma.cn_datatypes
-    (extract_global_variables prog5.globs)
-    None
-    it
+  CtA.expr_toplevel sigma.cn_datatypes (extract_global_variables prog5.globs) None it
 
 
 let get_parent_and_size (sct : Sctypes.t) (arg : IT.t) loc =
